@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  ¿Eliminar consola?
+{% endblock %}
+
+{% block body %}
+  <div class="col-auto">
+    <h3>
+      ¿Seguro que quieres eliminar esta consola?
+    </h3>
+    <a href="/consola/delete/{{ consola.id }}" class="btn btn-danger">Sí</a>
+    <a href="/consola" class="btn btn-success">No</a>
+    <div class="container">
+      <img style="width:300px" src="{{ consola.imagen }}" />
+    </div>
+    <div class="container">
+      <h4>
+        Nombre: {{ consola.abreviatura }} &#40;{{ consola.nombre }}&#41;
+      </h4>
+    </div>
+  </div>
+{% endblock %}

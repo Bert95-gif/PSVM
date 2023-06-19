@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+  Lista de usuarios
+{% endblock %}
+
+{% block body %}
+{% if is_granted('ROLE_USER')%}
+  <a href="/user/new" class="btn btn-primary">
+    Dar de alta a otro usuario
+  </a>
+  {% endif %}
+  <h3 style="text-align:center">
+    Lista de usuario
+  </h3>
+  <div class="m-3">
+    <table class="table table-bordered" style="text-align:center; border-color:black">
+      <thead>
+        <tr>
+          <th>
+            Correo electrónico
+          </th>
+          <th>
+            Contraseña
+          </th>
+          {% if is_granted('ROLE_ADMIN')%}
+          <th>Opciones</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users|sort((a, b) => a.email <=> b.email) %}
+          <tr>
+            <td>
+              {{ user.email }}
+            </td>
+            <td>{{user.password}}</td>
+            {% if is_granted('ROLE_ADMIN')%}
+            <td>
+            
+              <a href="/user/edit/{{ user.id }}"
+                class="btn btn-warning">
+                Modificar datos
+              </a>
+              
+              <a href="/user/delete/{{ user.id }}"
+                class="btn btn-danger">
+                Dar de baja
+              </a>
+
+            </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+
+{% endblock %}
+

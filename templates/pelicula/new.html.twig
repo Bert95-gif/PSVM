@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Inserta una película
+{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+  <style></style>
+  <div class="mb-3" style="width: 500px;  margin: auto; padding:auto">
+<h4>¡Bienvenido al formulario de introducción de películas! Para que la imagen sea válida, copia y pega su enlace cuando la encuentres en la etiqueta que la indique. Solo puede haber valores numéricos en las etiquetas del año de estreno y la duración de la película. Toca los cuadros o los géneros que quieras añadir. Para quitarlos, vuelve a tocarlos.</h4>
+    </div><div class="mb-3" style="width: 300px;  margin: auto; "><h2>
+      Introduce una nueva película
+    </h2>
+    
+    <div class="col-auto">
+    <form action="{{ path('app_pelicula_new') }}" method="post">
+    {{form_start(form)}}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.titulo) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.duracion) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.anio) }}
+        </div>
+    </div>
+    Géneros<br>
+    <div class="row">
+        <div class="col" style="text-align:left">
+            {{ form_row(form.generos) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.imagen) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.enlace) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.Send) }}
+        </div>
+    </div>
+    {{form_end(form)}}
+      </form>
+    </div>
+    </div>
+    </div>
+    <div class="mx-auto" style="width: 200px;">
+    <a href="/pelicula" class="btn btn-secondary" style="margin-bottom:20px">Volver</a>
+    </div>
+  
+{% endblock %}

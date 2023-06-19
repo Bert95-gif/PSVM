@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  ¿Eliminar serie?
+{% endblock %}
+
+{% block body %}
+  <div class="col-auto">
+    <h3>
+      ¿Seguro que quieres eliminar esta serie?
+    </h3>
+    <a href="/serie/delete/{{serie.id}}" class="btn btn-danger">Sí</a>
+    <a href="/serie" class="btn btn-success">No</a>
+    <div class="container">
+        <img style="width:300px" src="{{serie.imagen}}">
+      </table>
+    </div>
+    <div class="container">
+      <h4>Título: {{serie.titulo}}</h4>
+    </div>
+  </div>
+{% endblock %}

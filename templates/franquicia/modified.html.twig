@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Franquicia editada
+{% endblock %}
+
+{% block body %}
+  <div class="col-auto">
+    <h3>
+      La franquicia se ha editado con éxito
+    </h3>
+    <table class="table table-bordered" style="text-align:center; border-color:black">
+      <thead>
+        <tr>
+          <th>
+            Nombre
+          </th>
+          <th>
+            Película/s
+          </th>
+          <th>
+            Serie/s
+          </th>
+          <th>
+          Videojuego/s
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>
+              {{ franquicia.nombre }}
+            </td>
+            <td>
+              {% if franquicia.peliculas is empty %}
+              Ninguna
+              {% elseif franquicia.peliculas|length == 1 %}
+              {% for pelicula in franquicia.peliculas|sort((a, b) => a.titulo <=> b.titulo) %}
+                  {{ pelicula.titulo }}
+                {% endfor %}
+                {% else %}
+              <ul>
+                {% for pelicula in franquicia.peliculas|sort((a, b) => a.titulo <=> b.titulo) %}
+                  <li>{{ pelicula.titulo }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </td>
+            <td>
+            {% if franquicia.series is empty %}
+            Ninguna
+            {% elseif franquicia.series|length == 1 %}
+            {% for serie in franquicia.series|sort((a, b) => a.titulo <=> b.titulo) %}
+                  {{ serie.titulo }}
+                {% endfor %}
+            {% else %}
+              <ul>
+                {% for serie in franquicia.series|sort((a, b) => a.titulo <=> b.titulo) %}
+                  <li>{{ serie.titulo }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </td>
+            <td>
+            {% if franquicia.videojuegos is empty %}
+            Ninguno
+            {% elseif franquicia.videojuegos|length == 1 %}
+            {% for juego in franquicia.videojuegos|sort((a, b) => a.titulo <=> b.titulo) %}
+                  {{ juego.titulo }}
+                {% endfor %}
+            {% else %}
+              <ul>
+                {% for juego in franquicia.videojuegos|sort((a, b) => a.titulo <=> b.titulo) %}
+                  <li>{{ juego.titulo }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </td>
+          </tr>
+      </tbody>
+    </table>
+    <a href="/franquicia" class="btn btn-secondary" style="margin-bottom:20px">
+      Volver a la lista de franquicias
+    </a><br />
+  </div>
+{% endblock %}

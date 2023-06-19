@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  ¿Eliminar concurso?
+{% endblock %}
+
+{% block body %}
+  <div class="col-auto">
+    <h3>
+      ¿Seguro que quieres eliminar este concurso?
+    </h3>
+    <a href="/concurso/pelicula/delete/{{ concurso.id }}" class="btn btn-danger">Sí</a>
+    <a href="/concurso" class="btn btn-success">No</a>
+    <div class="container">
+      <h4>
+        Nombre: {{ concurso.nombre }}
+      </h4>
+    </div>
+    <div class="container">
+        <ul class="list-group list-group-horizontal justify-content-center text-center">
+            {% for pelicula in concurso.peliculas|sort((a, b) => a.titulo <=> b.titulo) %}
+                <li class="list-group-item"><img style="height:200px;" title="{{pelicula.titulo}}" src="{{pelicula.imagen}}"><p>{{ pelicula.titulo }}</p></li>
+            {% endfor %}
+        </ul>
+    </div>
+  </div>
+{% endblock %}

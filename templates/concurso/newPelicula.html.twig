@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Inserta un concurso de películas
+{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+  <style></style>
+  <div class="mb-3" style="width: 500px;  margin: auto;">
+<h4>¡Bienvenido al formulario de introducción de concursos de películas! Toca los cuadros o los títulos de las películas que quieras añadir. Para quitarlas, vuelve a tocarlos.</h4>
+    </div><div class="mb-3" style="width: 300px;  margin: auto;"><h2>
+      Introduce un nuevo concurso de películas
+    </h2>
+    
+    <div class="col-auto">
+    <form action="{{ path('app_concurso_new_peliculas') }}" method="post">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.nombre) }}
+        </div>
+    </div>
+    Títulos de películas
+    <div class="row">
+        <div class="col" style="text-align:left">
+            {{ form_row(form.peliculas) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="text-align:left">
+            {{ form_row(form.fechaInicio) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="text-align:left">
+            {{ form_row(form.fechaFinal) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.send) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+    </form>
+    </div>
+    </div>
+    <a href="/concurso" class="btn btn-secondary" style="margin-bottom:20px">Volver</a>
+  </div>
+{% endblock %}

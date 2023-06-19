@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% block title %}Lista de juegos
+{% endblock %}
+
+{% block body %}
+{% if is_granted('ROLE_USER')%}
+	<a href="/videojuego/new" class="btn btn-primary">Introducir otro juego</a>
+	{% endif %}
+	<h3 style="text-align:center">Lista de videojuegos</h3>
+	<div class="m-3">
+	<table class="table table-bordered" style="text-align:center; border-color:black">
+		<thead>
+			<tr>
+				<th>Título</th>
+                <th>Géneros</th>
+                <th>Calificación por edades</th>
+                <th>Año de lanzamiento</th>
+                <th>Consolas</th>
+                <th>Imagen</th>
+				<th>Opciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for juego in juegos|sort((a, b) => a.titulo <=> b.titulo) %}
+				<tr>
+					<td>{{juego.titulo}}</td>
+                    <td>{% if juego.generos|length == 1 %}{% for genero in juego.generos|sort((a, b) => a.tipo <=> b.tipo) %} {{genero.tipo}} {% endfor %}{% else %}<ul>{% for genero in juego.generos|sort((a, b) => a.tipo <=> b.tipo) %}
+					<li>{{genero.tipo}}</li> {% endfor %}</ul>{% endif %}</td>
+					<td> {% if juego.calificacion == 3 or (juego.calificacion < 7 and juego.calificacion > 3) %}
+					<img style="width:100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/PEGI_3.svg/1200px-PEGI_3.svg.png">
+					{% elseif juego.calificacion == 7 or (juego.calificacion < 12 and juego.calificacion > 7) %}
+					<img style="width:100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/PEGI_7.svg/840px-PEGI_7.svg.png">
+					{% elseif juego.calificacion == 12 or (juego.calificacion < 16 and juego.calificacion > 12) %}
+					<img style="width:100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/PEGI_12.svg/840px-PEGI_12.svg.png">
+					{% elseif juego.calificacion == 16 or (juego.calificacion < 18 and juego.calificacion > 16) %}
+					<img style="width:100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/PEGI_16.svg/800px-PEGI_16.svg.png">
+					{% elseif juego.calificacion == 18 %}
+					<img style="width:100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/PEGI_18.svg/800px-PEGI_18.svg.png">
+					{% endif %}
+					</td>
+					<td>{{juego.anio}}</td>
+                    <td>{% if juego.consolas|length == 1 %}{% for consola in juego.consolas|sort((a, b) => a.abreviatura <=> b.abreviatura) %}<a href="/consola/show/{{consola.id}}">{{consola.abreviatura}}</a>{% endfor %}{% else %}<ul>{% for consola in juego.consolas|sort((a, b) => a.abreviatura <=> b.abreviatura) %}<li><a href="/consola/show/{{consola.id}}">{{consola.abreviatura}}</a></li> {% endfor %}</ul>{% endif %}</td>
+                    <td>{% if juego.enlace is not null %}<a href="{{juego.enlace}}" title="{{juego.titulo}}" target="_blank"><img style="height:150px;" src="{{juego.imagen}}"></a>{% else %}<img style="height:150px;" title="{{juego.titulo}}" src="{{juego.imagen}}">{% endif %}</td>
+					<td>{% if is_granted('ROLE_USER')%}
+					<a href="/videojuego/check/{{juego.id}}" class="btn btn-danger">Eliminar</a>
+					
+					<a href="/videojuego/edit/{{juego.id}}" class="btn btn-warning">Modificar</a>
+					{% endif %}
+					<a href="/videojuego/show/{{juego.id}}" class="btn btn-success">Mostrar</a>
+					</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+{% endblock %}

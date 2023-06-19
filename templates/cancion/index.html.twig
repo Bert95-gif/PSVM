@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+  Lista de canciones
+{% endblock %}
+
+{% block body %}
+{% if is_granted('ROLE_USER')%}
+  <a href="/cancion/new" class="btn btn-primary">
+    Introducir otra canción
+  </a>
+  {% endif %}
+  <h3 style="text-align:center">
+    Lista de canciones
+  </h3>
+  <div class="m-3">
+    <table class="table table-bordered" style="text-align:center; border-color:black">
+      <thead>
+        <tr>
+          <th>
+            Título
+          </th>
+          <th>
+            Año de grabación
+          </th>
+          <th>
+            Intérprete/s
+          </th>
+          <th>
+          Género/s
+          </th>
+          <th>
+          Duración en segundos
+          </th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cancion in canciones|sort((a, b) => a.nombre <=> b.nombre) %}
+          <tr>
+            <td>
+              {{ cancion.nombre }}
+            </td>
+            <td>
+              {{ cancion.anio }}
+            </td>
+            <td>
+              {{ cancion.interprete }}
+            </td>
+            <td>
+              {% if cancion.generos|length == 1 %}{% for genero in cancion.generos|sort((a, b) => a.tipo <=> b.tipo) %} {{genero.tipo}} {% endfor %}{% else %}<ul>{% for genero in cancion.generos|sort((a, b) => a.tipo <=> b.tipo) %}
+					<li>{{genero.tipo}}</li> {% endfor %}</ul>{% endif %}
+            </td>
+            <td>
+              {{ cancion.duracion }}
+            </td>
+            <td>
+            <a href="/cancion/show/{{ cancion.id }}"
+                class="btn btn-success">
+                Mostrar
+              </a>
+            {% if is_granted('ROLE_USER')%}
+              <a href="/cancion/edit/{{ cancion.id }}"
+                class="btn btn-warning">
+                Modificar
+              </a>
+              
+              <a href="/cancion/check/{{ cancion.id }}"
+                class="btn btn-danger">
+                Eliminar
+              </a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+
+{% endblock %}

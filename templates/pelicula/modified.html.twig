@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Película editada
+{% endblock %}
+
+{% block body %}
+<div class="mb-3" style="margin: auto;">
+  <div class="col-auto">
+    <h3>
+      La película se ha editado con éxito
+    </h3>
+    <table class="table table-bordered" style="border-color:black">
+        <th>
+          Imagen
+        </th>
+        <th colspan="2">
+          Datos
+        </th>
+        <tr>
+        <td rowspan="4">
+        <img style="width:300px;" src="{{pelicula.imagen}}">
+        </td>
+        <th>Duración en minutos</th><td>{{pelicula.duracion}}</td><tr>
+        <th>Año de estreno</th><td>{{pelicula.anio}}</td><tr>
+        <th>Género/s</th><td><ul>{% for genero in pelicula.generos|sort((a, b) => a.tipo <=> b.tipo) %}<li>{{genero.tipo}}</li> {% endfor %}</ul></td><tr>
+        <th>Franquicia/s</th><td>{% if pelicula.franquicias is empty %} Ninguna {% elseif pelicula.franquicias|length == 1 %} {% for franquicia in pelicula.franquicias %} {{franquicia.nombre}} {% endfor %} {% else %}<ul>{% for franquicia in pelicula.franquicias %}<li>{{franquicia.nombre}}</li> {% endfor %}</ul>{% endif %}</td>
+      </table>
+    <a href="/pelicula" class="btn btn-secondary" style="margin-bottom:20px">
+      Volver a la lista de películas
+    </a><br />
+  </div>
+  </div>
+{% endblock %}

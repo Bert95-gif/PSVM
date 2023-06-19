@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block title %}Lista de consolas
+{% endblock %}
+
+{% block body %}
+{% if is_granted('ROLE_USER')%}
+<a href="/consola/new" class="btn btn-primary">Introducir otra consola</a>
+{% endif %}
+	<h3 style="text-align:center">Lista de videoconsolas</h3>
+	<div class="m-3">
+	<table class="table table-bordered" style="text-align:center; border-color:black">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+                <th>Abreviatura</th>
+                <th>Empresa</th>
+                <th>Imagen</th>
+				<th>Opciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for consola in consolas|sort((a, b) => a.nombre <=> b.nombre) %}
+				<tr>
+					<td>{{consola.nombre}}</td>
+					<td>{{consola.abreviatura}}</td>
+					<td>{{consola.empresa}}</td>
+                    <td><img style="width:150px;" src="{{consola.imagen}}" title="{{consola.abreviatura}}"></td>
+					<td>
+					{% if is_granted('ROLE_USER')%}
+					<a href="/consola/check/{{consola.id}}" class="btn btn-danger">Eliminar</a>
+					
+					<a href="/consola/edit/{{consola.id}}" class="btn btn-warning">Modificar</a>
+					{% endif %}
+					<a href="/consola/show/{{consola.id}}" class="btn btn-success">Mostrar</a>
+					</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+	
+{% endblock %}

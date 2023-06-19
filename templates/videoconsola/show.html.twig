@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  {{consola.nombre}}
+{% endblock %}
+
+{% block body %}
+  <h1 style="text-align:center">
+    {{ consola.abreviatura }}
+  </h1>
+
+  <div class="mb-3" style="margin: auto;">
+    <div class="container">
+      <table class="table table-bordered" style="border-color:black">
+        <th>
+          Imagen
+        </th>
+        <th colspan="2">
+          Datos
+        </th>
+        <tr>
+        <td rowspan="6">
+        <img style="width:300px" src="{{consola.imagen}}">
+        </td>
+        <th>Nombre:</th><td>{{consola.nombre}}</td><tr>
+        <th>Diseñado por:</th><td>{{consola.empresa}}</td><tr>
+        <th>Año de lanzamiento:</th><td>{{consola.anioProduccion}}</td><tr>
+        <th>Año de descontinuación:</th><td>{% if consola.anioDescontinuacion is null %} Ninguno {% else %} {{consola.anioDescontinuacion}} {% endif %}</td><tr>
+        <th>Videojuego/s</th><td>{% if consola.videojuegos is empty %}Ninguno... por ahora{% elseif consola.videojuegos|length == 1 %}{% for juego in consola.videojuegos|sort((a, b) => a.titulo <=> b.titulo) %}<p>{{juego.titulo}}</p> {% endfor %}{% else %}<ul>{% for juego in consola.videojuegos|sort((a, b) => a.titulo <=> b.titulo) %}<li>{{juego.titulo}}</li> {% endfor %}</ul>{% endif %}</td>
+      </table>
+    </div>
+    <div class="container">
+      <a href="/consola" class="btn btn-secondary">Volver a la lista de consolas</a>
+      {% if is_granted('ROLE_USER')%}
+      <a href="/consola/edit/{{consola.id}}" class="btn btn-warning">
+        Modificar
+      </a>
+      
+      <a href="/consola/check/{{consola.id}}" class="btn btn-danger">Eliminar</a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

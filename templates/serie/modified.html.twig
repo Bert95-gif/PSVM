@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Serie editada
+{% endblock %}
+
+{% block body %}
+  <div class="col-auto">
+    <h3>
+      La serie se ha editado con éxito
+    </h3>
+    <div class="container">
+      <table class="table table-bordered" style="border-color:black">
+        <th>
+          Imagen
+        </th>
+        <th colspan="2">
+          Datos
+        </th>
+        <tr>
+        <td rowspan="5">
+        <img style="width:300px;" src="{{serie.imagen}}">
+        </td>
+        <th>Cantidad de episodios</th><td>{{serie.episodios}}</td><tr>
+        <th>Duración de episodios por minutos</th><td>{{serie.duracion}}</td><tr>
+        <th>Año de estreno</th><td>{{serie.anio}}</td><tr>
+        <th>Género/s</th><td><ul>{% for genero in serie.generos|sort((a, b) => a.tipo <=> b.tipo) %}<li>{{genero.tipo}}</li> {% endfor %}</ul></td><tr>
+        <th>Franquicia/s</th><td>{% if serie.franquicias is empty %} Ninguna {% elseif serie.franquicias|length == 1 %} {% for franquicia in serie.franquicias %} {{franquicia.nombre}} {% endfor %} {% else %}<ul>{% for franquicia in serie.franquicias %}<li>{{franquicia.nombre}}</li> {% endfor %}</ul>{% endif %}</td>
+      </table>
+    </div>
+    <div class="container">
+      <a href="/serie" class="btn btn-secondary">Volver a la lista de series</a>
+    </div>
+  </div>
+{% endblock %}

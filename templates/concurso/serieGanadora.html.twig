@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Elige una serie ganadora
+{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+  <style></style>
+  <h2>{{concurso.nombre}}</h2>
+    <h3>
+      ¿Qué serie quieres votar? Elige su título.
+    </h3>
+    <div class="mb-3" style="width: 300px;  margin: auto;">
+    <div class="col-auto">
+    {{ form_start(form) }}
+    {{ form_end(form) }}
+    </div>
+    </div>
+    <a href="/concurso" class="btn btn-secondary mb-3">Volver</a>
+  </div>
+{% endblock %}

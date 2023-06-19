@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  ¿Eliminar franquicia?
+{% endblock %}
+
+{% block body %}
+  <div class="col-auto">
+    <h3>
+      ¿Seguro que quieres eliminar esta franquicia?
+    </h3>
+    <a href="/franquicia/delete/{{ franquicia.id }}" class="btn btn-danger">
+      Sí
+    </a>
+    <a href="/franquicia" class="btn btn-success">No</a>
+    <div class="container">
+      <h4>
+        Nombre: {{ franquicia.nombre }}
+      </h4>
+      <h4>
+        Cantidad de series: {{ franquicia.series|length }}
+      </h4>
+      <h4>
+        Cantidad de películas: {{ franquicia.peliculas|length }}
+      </h4>
+      <h4>
+        Cantidad de juegos: {{ franquicia.videojuegos|length }}
+      </h4>
+    </div>
+  </div>
+{% endblock %}

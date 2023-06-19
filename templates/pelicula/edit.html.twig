@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Editando película
+{% endblock %}
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% block body %}
+  <h2>
+    Editar película
+  </h2>
+  <div class="mb-3" style="width: 300px;  margin: auto;">
+    <div class="col-auto">
+      <form action="{{
+        path(
+          'app_pelicula_edit',
+          {
+            id: pelicula.id
+          }
+        )
+        }}"
+        method="post">
+        {{ form_start(form) }}
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.titulo) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.duracion) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.anio) }}
+          </div>
+        </div>Géneros<br />
+        <div class="row">
+          <div class="col" style="text-align:left">
+            {{ form_row(form.generos) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.imagen) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.enlace) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            {{ form_row(form.Send) }}
+          </div>
+        </div>
+        {{ form_end(form) }}
+      </form>
+    </div>
+  </div>
+  <a href="/pelicula" class="btn btn-secondary" style="margin-bottom:20px">
+    Volver
+  </a>
+{% endblock %}

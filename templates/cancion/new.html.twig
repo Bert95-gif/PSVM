@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Inserta una canción
+{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+  <style></style>
+  <div class="mb-3" style="width: 500px;  margin: auto;">
+<h4>¡Bienvenido al formulario de introducción de canciones! Toca los cuadros o los títulos de los géneros que quieras añadir. Para quitarlos, vuelve a tocarlos. Solo puede haber valores numéricos en las etiquetas del año de grabación y la duración.</h4>
+    </div><div class="mb-3" style="width: 300px;  margin: auto;">
+    <h2>
+      Introduce una nueva canción
+    </h2>
+    
+    <div class="col-auto">
+    <form action="{{ path('app_cancion_new') }}" method="post">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col" >
+            {{ form_row(form.nombre) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" >
+            {{ form_row(form.anio) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" >
+            {{ form_row(form.duracion) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" >
+            {{ form_row(form.interprete) }}
+        </div>
+    </div>
+    Géneros musicales<br>
+    <div class="row">
+        <div class="col" style="text-align:left">
+            {{ form_row(form.generos) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.send) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+    </form>
+    </div>
+    </div>
+    <a href="/cancion" class="btn btn-secondary" style="margin-bottom:20px">Volver</a>
+  </div>
+{% endblock %}

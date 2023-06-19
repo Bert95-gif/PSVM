@@ -1,0 +1,341 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+  Lista de concursos
+{% endblock %}
+
+{% block body %}
+{% if is_granted('ROLE_ADMIN') %}
+  <a href="/concurso/new/pelicula" class="btn btn-primary">
+    Introducir otro concurso de películas
+  </a>
+  <a href="/concurso/new/serie" class="btn btn-primary">
+    Introducir otro concurso de series
+  </a>
+  <a href="/concurso/new/videojuego" class="btn btn-primary">
+    Introducir otro concurso de videojuegos
+  </a>
+  <a href="/concurso/new/cancion" class="btn btn-primary">
+    Introducir otro concurso de canciones
+  </a>
+{% endif %}
+  <h3 style="text-align:center">
+    Lista de concursos de películas
+  </h3>
+  <div class="center">
+    <table class="table table-bordered"
+      style="text-align:center; border-color:black; width: 1000px; margin-left: auto;
+  margin-right: auto;">
+      <thead>
+        <tr>
+          <th>
+            Nombre
+          </th>
+          <th>
+            Películas
+          </th>
+          <th>
+            Película ganadora
+          </th>
+          {% if is_granted('ROLE_JUDGE') or is_granted('ROLE_ADMIN') %}
+          <th>
+            Opciones
+          </th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for concurso in concursos_peliculas %}
+          <tr>
+            <td>
+              {{ concurso.nombre }}
+            </td>
+            <td>
+              <ul>
+                {% for pelicula in concurso.peliculas|sort((a, b) => a.anio <=> b.anio) %}
+                  <li>{{ pelicula.titulo }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>
+            {% if (concurso.votoPeliculas is empty) %}
+            Ninguna
+            {% else %}
+            <a href="/pelicula/show/{{concurso.calcularPeliculaGanadora.id}}">{{concurso.calcularPeliculaGanadora.titulo}}{% if concurso.fechaFinal|date('U') > "now"|date('U')%} (provisionalmente) {% endif %}</a>
+            {% endif %}
+            </td>
+            
+            <td>
+            {% if (concurso.fechaFinal|date('U') < "now"|date('U'))%}
+              Ya no se puede votar<br>
+              {% elseif (concurso.fechaInicio|date('U') > "now"|date('U'))%}
+              Todavía no se puede votar<br>
+              {% endif %}
+              {% if (concurso.votoPeliculas is not empty) %}
+              <a href="/concurso/pelicula/votos/{{ concurso.id }}"
+                class="btn btn-dark">
+                Votos
+              </a>
+              {% endif %}
+              {% if is_granted('ROLE_ADMIN') %}
+              <a href="/concurso/pelicula/check/{{ concurso.id }}"
+                class="btn btn-danger">
+                Eliminar
+              </a>
+              <a href="/concurso/pelicula/edit/{{ concurso.id }}"
+                class="btn btn-warning">
+                Modificar
+              </a>
+              {% endif %}
+
+              {% if is_granted('ROLE_JUDGE') %}
+              {% if ((concurso.fechaInicio is not empty and concurso.fechaFinal is not empty ) and (concurso.fechaInicio|date('U') < "now"|date('U') and concurso.fechaFinal|date('U') > "now"|date('U') )) %}
+
+              <a href="/concurso/pelicula/voto/{{concurso.id}}" class="btn btn-info">Votar</a>
+              {% endif %}
+              {% endif %}
+            </td>
+            
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <h3 style="text-align:center">
+    Lista de concursos de series
+  </h3>
+  <div class="m-3">
+    <table class="table table-bordered"
+      style="text-align:center; border-color:black; width: 1000px; margin-left: auto;
+  margin-right: auto;">
+      <thead>
+        <tr>
+          <th>
+            Nombre
+          </th>
+          <th>
+            Series
+          </th>
+          <th>
+          Serie ganadora
+          </th>
+          {% if is_granted('ROLE_JUDGE') or is_granted('ROLE_ADMIN') %}
+          <th>
+            Opciones
+          </th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for concurso in concursos_series %}
+          <tr>
+            <td>
+              {{ concurso.nombre }}
+            </td>
+            <td>
+              <ul>
+                {% for serie in concurso.series|sort((a, b) => a.titulo <=> b.titulo) %}
+                  <li>{{ serie.titulo }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>
+            {% if (concurso.votoSeries is empty) %}
+            Ninguna
+            {% else %}
+            <a href="/serie/show/{{concurso.calcularSerieGanadora.id}}">{{concurso.calcularSerieGanadora.titulo}}{% if concurso.fechaFinal|date('U') > "now"|date('U')%} (provisionalmente) {% endif %}</a>
+            {% endif %}
+            </td>
+            
+            <td>
+            {% if (concurso.fechaFinal|date('U') < "now"|date('U'))%}
+              Ya no se puede votar<br>
+              {% elseif (concurso.fechaInicio|date('U') > "now"|date('U'))%}
+              Todavía no se puede votar<br>
+              {% endif %}
+              {% if (concurso.votoSeries is not empty) %}
+              <a href="/concurso/serie/votos/{{ concurso.id }}"
+                class="btn btn-dark">
+                Votos
+              </a>
+              {% endif %}
+              {% if is_granted('ROLE_ADMIN') %}
+              <a href="/concurso/serie/check/{{ concurso.id }}"
+                class="btn btn-danger">
+                Eliminar
+              </a>
+              <a href="/concurso/serie/edit/{{ concurso.id }}"
+                class="btn btn-warning">
+                Modificar
+              </a>
+              {% endif %}
+              {% if is_granted('ROLE_JUDGE') %}
+              {% if ((concurso.fechaInicio is not empty and concurso.fechaFinal is not empty ) and (concurso.fechaInicio|date('U') < "now"|date('U') and concurso.fechaFinal|date('U') > "now"|date('U') )) %}
+
+              <a href="/concurso/serie/voto/{{concurso.id}}" class="btn btn-info">Votar</a>
+              
+              {% endif %}
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <h3 style="text-align:center">
+    Lista de concursos de videojuegos
+  </h3>
+  <table class="table table-bordered"
+    style="text-align:center; border-color:black; width: 1000px; margin-left: auto;
+  margin-right: auto;">
+    <thead>
+      <tr>
+        <th>
+          Nombre
+        </th>
+        <th>
+          Juegos
+        </th>
+        <th>
+        Juego ganador
+        </th>
+        {% if is_granted('ROLE_JUDGE') or is_granted('ROLE_ADMIN') %}
+        <th>
+          Opciones
+        </th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for concurso in concursos_videojuegos %}
+        <tr>
+          <td>
+            {{ concurso.nombre }}
+          </td>
+          <td>
+            <ul>
+              {% for juego in concurso.videojuegos|sort((a, b) => a.titulo <=> b.titulo) %}
+                <li>{{ juego.titulo }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td>
+            {% if concurso.votoVideojuegos is empty %}
+            Ninguno
+            {% else %}
+            <a href="/videojuego/show/{{concurso.calcularJuegoGanador.id}}">{{concurso.calcularJuegoGanador.titulo}}{% if concurso.fechaFinal|date('U') > "now"|date('U')%} (provisionalmente) {% endif %}</a>
+            {% endif %}
+            </td>
+          <td>
+          {% if (concurso.fechaFinal|date('U') < "now"|date('U'))%}
+              Ya no se puede votar<br>
+              {% elseif (concurso.fechaInicio|date('U') > "now"|date('U'))%}
+              Todavía no se puede votar<br>
+              {% endif %}
+              {% if (concurso.votoVideojuegos is not empty) %}
+              <a href="/concurso/videojuego/votos/{{ concurso.id }}"
+                class="btn btn-dark">
+                Votos
+              </a>
+              {% endif %}
+          {% if is_granted('ROLE_ADMIN') %}
+            <a href="/concurso/videojuego/check/{{ concurso.id }}"
+              class="btn btn-danger">
+              Eliminar
+            </a>
+            <a href="/concurso/videojuego/edit/{{ concurso.id }}"
+              class="btn btn-warning">
+              Modificar
+            </a>
+            {% endif %}
+            {% if is_granted('ROLE_JUDGE') %}
+            {% if ((concurso.fechaInicio is not empty and concurso.fechaFinal is not empty ) and (concurso.fechaInicio|date('U') < "now"|date('U') and concurso.fechaFinal|date('U') > "now"|date('U') )) %}
+            
+              <a href="/concurso/videojuego/voto/{{concurso.id}}" class="btn btn-info">Votar</a>
+              
+            {% endif %}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h3 style="text-align:center">
+    Lista de concursos de canciones
+  </h3>
+  <table class="table table-bordered"
+    style="text-align:center; border-color:black; width: 1000px; margin-left: auto;
+  margin-right: auto;">
+    <thead>
+      <tr>
+        <th>
+          Nombre
+        </th>
+        <th>
+          Canciones
+        </th>
+        <th>
+        Canción ganadora
+        </th>
+        {% if is_granted('ROLE_JUDGE') or is_granted('ROLE_ADMIN') %}
+        <th>
+          Opciones
+        </th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for concurso in concursos_canciones %}
+        <tr>
+          <td>
+            {{ concurso.nombre }}
+          </td>
+          <td>
+            <ul>
+              {% for cancion in concurso.canciones|sort((a, b) => a.nombre <=> b.nombre) %}
+                <li>{{ cancion.nombre }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td>
+            {% if (concurso.votoCancions is empty) %}
+            Ninguna
+            {% else %}
+            <a href="/cancion/show/{{concurso.calcularCancionGanadora.id}}">{{concurso.calcularCancionGanadora.nombre}}{% if concurso.fechaFinal|date('U') > "now"|date('U')%} (provisionalmente) {% endif %}</a>
+            {% endif %}
+            </td>
+            
+          <td>
+          {% if (concurso.fechaFinal|date('U') < "now"|date('U'))%}
+              Ya no se puede votar<br>
+              {% elseif (concurso.fechaInicio|date('U') > "now"|date('U'))%}
+              Todavía no se puede votar<br>
+          {% endif %}
+          {% if (concurso.votoCancions is not empty) %}
+          <a href="/concurso/musica/votos/{{ concurso.id }}"
+                class="btn btn-dark">
+                Votos
+              </a>
+              {% endif %}
+          {% if is_granted('ROLE_ADMIN') %}
+            <a href="/concurso/cancion/check/{{ concurso.id }}"
+              class="btn btn-danger">
+              Eliminar
+            </a>
+            <a href="/concurso/cancion/edit/{{ concurso.id }}"
+              class="btn btn-warning">
+              Modificar
+            </a>
+            {% endif %}
+            {% if is_granted('ROLE_JUDGE') %}
+            {% if ((concurso.fechaInicio is not empty and concurso.fechaFinal is not empty ) and (concurso.fechaInicio|date('U') < "now"|date('U') and concurso.fechaFinal|date('U') > "now"|date('U') )) %}
+            
+            <a href="/concurso/cancion/voto/{{concurso.id}}" class="btn btn-info">Votar</a>
+            {% endif %}
+            {% endif %}
+          </td>
+          
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

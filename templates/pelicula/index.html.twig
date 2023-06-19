@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block title %}Lista de películas
+{% endblock %}
+
+{% block body %}
+{% if is_granted('ROLE_JUDGE')
+                or (is_granted('ROLE_USER')) %}
+<a href="/pelicula/new" class="btn btn-primary">Introducir otra película</a>
+{% endif %}
+	<h3 style="text-align:center">Lista de películas</h3>
+	<div class="m-3">
+	<table class="table table-bordered" style="text-align:center; border-color:black">
+		<thead>
+			<tr>
+				<th>Título</th>
+				<th>Duración</th>
+				<th>Año de estreno</th>
+				<th>Género/s</th>
+                <th>Imagen</th>
+				<th>Opciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for pelicula in peliculas|sort((a, b) => a.titulo <=> b.titulo) %}
+				<tr>
+					<td>{{pelicula.titulo}}</td>
+					<td>{{pelicula.duracion}} minutos</td>
+					<td>{{pelicula.anio}}</td>
+					<td>{% if pelicula.generos|length == 1 %}{% for genero in pelicula.generos|sort((a, b) => a.tipo <=> b.tipo) %} {{genero.tipo}} {% endfor %}{% else %}<ul>{% for genero in pelicula.generos|sort((a, b) => a.tipo <=> b.tipo) %}
+					<li>{{genero.tipo}}</li> {% endfor %}</ul>{% endif %}</td>
+                    <td>{% if pelicula.enlace is not null %}<a href="{{pelicula.enlace}}" target="_blank"><img style="height:150px;" title="{{pelicula.titulo}}" src="{{pelicula.imagen}}"></a>{% else %}<img style="height:150px;" title="{{pelicula.titulo}}" src="{{pelicula.imagen}}">{% endif %}</td>
+					<td>
+					{% if is_granted('ROLE_USER')%}
+					<a href="/pelicula/check/{{pelicula.id}}" class="btn btn-danger">Eliminar</a>
+					
+					<a href="/pelicula/edit/{{pelicula.id}}" class="btn btn-warning">Modificar</a>
+					{% endif %}
+					<a href="/pelicula/show/{{pelicula.id}}" class="btn btn-success">Mostrar</a>
+					</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+	
+{% endblock %}

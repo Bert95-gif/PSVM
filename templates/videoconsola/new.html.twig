@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Inserta una consola
+{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+  <style></style>
+  <div class="mb-3" style="width: 500px;  margin: auto;">
+<h4>¡Bienvenido al formulario de introducción de consolas! Los campos señalados con un asterisco son obligatorios. Solo puede haber valores numéricos en las etiquetas de los años, que puedes dejar en blanco si quieres. Para que la imagen de la consola sea válida y se pueda mostrar, pon su enlace en la etiqueta que lo indique.</h4>
+    </div><div class="mb-3" style="width: 300px;  margin: auto;"><h2>
+      Introduce una nueva consola
+    </h2>
+    
+    <div class="col-auto">
+    <form action="{{ path('app_videoconsola_new') }}" method="post">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.nombre) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.abreviatura) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.empresa) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.anioProduccion) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.anioDescontinuacion) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.imagen) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.save) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+    </form>
+    </div>
+    </div>
+    <a href="/consola" class="btn btn-secondary" style="margin-bottom:20px">Volver</a>
+  </div>
+{% endblock %}

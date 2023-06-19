@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+  Lista de franquicias
+{% endblock %}
+
+{% block body %}
+{% if is_granted('ROLE_USER')%}
+  <a href="/franquicia/new" class="btn btn-primary">
+    Introducir otra franquicia
+  </a>
+  {% endif %}
+  <h3 style="text-align:center">
+    Lista de franquicias
+  </h3>
+  <div class="m-3">
+    <table class="table table-bordered" style="text-align:center; border-color:black">
+      <thead>
+        <tr>
+          <th>
+            Nombre
+          </th>
+          <th>
+            Película/s
+          </th>
+          <th>
+            Serie/s
+          </th>
+          <th>
+          Videojuego/s
+          </th>
+          {% if is_granted('ROLE_USER')%}
+          <th>Opciones</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for franquicia in franquicias|sort((a, b) => a.nombre <=> b.nombre) %}
+          <tr>
+            <td>
+              {{ franquicia.nombre }}
+            </td>
+            <td>
+              {% if franquicia.peliculas is empty %}
+              Ninguna
+              {% elseif franquicia.peliculas|length == 1 %}
+              {% for pelicula in franquicia.peliculas|sort((a, b) => a.titulo <=> b.titulo) %}
+                  {{ pelicula.titulo }}
+                {% endfor %}
+                {% else %}
+              <ul>
+                {% for pelicula in franquicia.peliculas|sort((a, b) => a.titulo <=> b.titulo) %}
+                  <li>{{ pelicula.titulo }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </td>
+            <td>
+            {% if franquicia.series is empty %}
+            Ninguna
+            {% elseif franquicia.series|length == 1 %}
+            {% for serie in franquicia.series|sort((a, b) => a.titulo <=> b.titulo) %}
+                  {{ serie.titulo }}
+                {% endfor %}
+            {% else %}
+              <ul>
+                {% for serie in franquicia.series|sort((a, b) => a.titulo <=> b.titulo) %}
+                  <li>{{ serie.titulo }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </td>
+            <td>
+            {% if franquicia.videojuegos is empty %}
+            Ninguno
+            {% elseif franquicia.videojuegos|length == 1 %}
+            {% for juego in franquicia.videojuegos|sort((a, b) => a.titulo <=> b.titulo) %}
+                  {{ juego.titulo }}
+                {% endfor %}
+            {% else %}
+              <ul>
+                {% for juego in franquicia.videojuegos|sort((a, b) => a.titulo <=> b.titulo) %}
+                  <li>{{ juego.titulo }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </td>
+            {% if is_granted('ROLE_USER')%}
+            <td>
+            
+              <a href="/franquicia/edit/{{ franquicia.id }}"
+                class="btn btn-warning">
+                Modificar
+              </a>
+              
+              <a href="/franquicia/check/{{ franquicia.id }}"
+                class="btn btn-danger">
+                Eliminar
+              </a>
+
+            </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+
+{% endblock %}
+

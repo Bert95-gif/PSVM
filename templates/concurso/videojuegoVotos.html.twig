@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+  Lista de votos del concurso de juegos
+{% endblock %}
+
+{% block body %}
+  <h2>
+    Concurso: {{concurso.nombre}}
+  </h2>
+  <h3 style="text-align:center">
+    Lista de votos del concurso
+  </h3>
+  <div class="m-3">
+    <ul class="list-group justify-content-center text-center">
+    {% for voto in concurso.votoVideojuegos|sort((a, b) => a.videojuego.titulo <=> b.videojuego.titulo) %}
+        <li class="list-group-item">{{ voto.videojuego.titulo }}</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class="m-3">
+		<h3 style="text-align:center">Lista de juegos del concurso</h3>
+		<div class="card-group">
+			{% for juego in concurso.videojuegos|sort((a, b) => a.titulo <=> b.titulo) %}
+				<div class="card m-5">
+					<img class="card-img-top w-auto" src="{{juego.imagen}}" alt="{{juego.titulo}}">
+					<div class="card-body">
+						<h5 class="card-title">{{juego.titulo}}</h5>
+						<p class="card-text">Votos:
+							<b>{{votos[juego.id]}}</b>
+						</p>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+
+		<div class="card m-auto text-white bg-success mt-3" style="width: 15rem;">
+			{% if ((concurso.fechaInicio is not empty and concurso.fechaFinal is not empty ) and (concurso.fechaInicio|date('U') < "now"|date('U') and concurso.fechaFinal|date('U') > "now"|date('U') )) %}
+			<div class="card-header">¡Ganador provisional!</div>
+			{% elseif concurso.fechaFinal|date('U') < "now"|date('U') %}
+			<div class="card-header">¡Ganador!</div>
+			{% endif %}
+			<img class="card-img-top" src="{{juegoGanador.imagen}}" alt="{{juegoGanador.titulo}}">
+			<div class="card-body">
+				<h5 class="card-title">{{juegoGanador.titulo}}</h5>
+			</div>
+		</div>
+	</div>
+  <a href="/concurso" class="btn btn-secondary mb-3">Volver</a>
+<br>
+{% endblock %}
+

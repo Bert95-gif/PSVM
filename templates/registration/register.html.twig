@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Registro
+{% endblock %}
+
+{% block body %}
+  {% for flash_error in app.flashes('verify_email_error') %}
+    <div class="alert alert-danger" role="alert">
+      {{ flash_error }}
+    </div>
+  {% endfor %}
+  <div class="mb-3" style="width: 500px;  margin: auto;">
+    <h4>
+      ¡Bienvenido al formulario de registro de usuarios! Introduce un correo
+      electrónico y una contraseña de 6 caracteres como mínimo. Para entrar como
+      juez el correo tiene que incluir la palabra juez, que también se puede
+      introducir en inglés, o sea, judge.
+    </h4>
+  </div>
+  <h1>
+    Registro
+  </h1>
+  <div class="mb-3" style="width: 300px;  margin: auto;">
+    <div class="col-auto">
+      <form action="{{ path('app_register') }}" method="post">
+        {{ form_start(registrationForm) }}
+
+        <div class="row">
+          <div class="col">
+            {{ form_row(registrationForm.email) }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            {{ form_row(registrationForm.password) }}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+        {{ form_end(registrationForm) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

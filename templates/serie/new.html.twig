@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Inserta una serie
+{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+  <style></style>
+  <div class="mb-3" style="width: 500px;  margin: auto;">
+    <h4>
+      ¡Bienvenido al formulario de introducción de series! Para que la imagen
+      sea válida, copia y pega su enlace cuando la encuentres en la etiqueta que
+      la indique. Solo puede haber valores numéricos en las etiquetas del año de
+      estreno y la cantidad y duración de los episodios serie. Toca los cuadros
+      o los géneros que quieras añadir. Para quitarlos, vuelve a tocarlos.
+    </h4>
+    </div><div class="mb-3" style="width: 300px;  margin: auto;">
+      <h2>
+        Introduce una nueva serie
+      </h2>
+
+      <div class="col-auto">
+      <form action="{{ path('app_serie_new') }}" method="post">
+        {{ form_start(form) }}
+        <div class="row">
+        <div class="col" >
+            {{ form_row(form.titulo) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" >
+            {{ form_row(form.episodios) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" >
+            {{ form_row(form.duracion) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" >
+            {{ form_row(form.anio) }}
+        </div>
+    </div>
+    Géneros<br>
+    <div class="row">
+        <div class="col" style="text-align:left">
+            {{ form_row(form.generos) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.imagen) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.enlace) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.Send) }}
+        </div>
+    </div>
+        {{ form_end(form) }}
+        </form>
+      </div>
+    </div>
+    <a href="/serie" class="btn btn-secondary" style="margin-bottom:20px">Volver</a>
+  </div>
+{% endblock %}

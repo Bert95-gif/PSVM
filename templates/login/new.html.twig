@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Inserta una canción
+{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+  <style></style>
+  <div class="mb-3" style="width: 300px;  margin: auto;">
+    <h2>
+      Introduce un nuevo usuario
+    </h2>
+    
+    <div class="col-auto">
+    <form action="{{ path('app_user_new') }}" method="post">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col" >
+            {{ form_row(form.email) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" >
+            {{ form_row(form.password) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.send) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+    </form>
+    </div>
+    </div>
+    <a href="/users" class="btn btn-secondary" style="margin-bottom:20px">Volver</a>
+  </div>
+{% endblock %}

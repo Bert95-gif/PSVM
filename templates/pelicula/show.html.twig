@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  {{pelicula.titulo}}
+{% endblock %}
+
+{% block body %}
+  <h1 style="text-align:center">
+    {{ pelicula.titulo }}
+  </h1>
+
+  <div class="mb-3" style="margin: auto;">
+    <div class="container">
+      <table class="table table-bordered" style="border-color:black; width: 95%">
+        <th>
+          Imagen
+        </th>
+        <th colspan="2">
+          Datos
+        </th>
+        <tr>
+        <td rowspan="4">
+        <img style="width:300px;" src="{{pelicula.imagen}}">
+        </td>
+        <th>Duración en minutos</th><td>{{pelicula.duracion}}</td><tr>
+        <th>Año de estreno</th><td>{{pelicula.anio}}</td><tr>
+        <th>Género/s</th><td><ul>{% for genero in pelicula.generos|sort((a, b) => a.tipo <=> b.tipo) %}<li>{{genero.tipo}}</li> {% endfor %}</ul></td><tr>
+        <th>Franquicia/s</th><td>{% if pelicula.franquicias is empty %} Ninguna {% elseif pelicula.franquicias|length == 1 %} {% for franquicia in pelicula.franquicias %} {{franquicia.nombre}} {% endfor %} {% else %}<ul>{% for franquicia in pelicula.franquicias %}<li>{{franquicia.nombre}}</li> {% endfor %}</ul>{% endif %}</td>
+      </table>
+    </div>
+    <div class="container">
+      <a href="/pelicula" class="btn btn-secondary">Volver a la lista de películas</a>
+      {% if is_granted('ROLE_USER')%}
+      <a href="/pelicula/edit/{{ pelicula.id }}" class="btn btn-warning">
+        Modificar
+      </a>
+      
+      <a href="/pelicula/check/{{pelicula.id}}" class="btn btn-danger">Eliminar</a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

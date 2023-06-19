@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+  Página principal
+{% endblock %}
+{% block body %}
+  <h2>
+    ¡Te damos la bienvenida a los concursos de archivos multimedia!
+  </h2>
+  <h3>
+    Elige un tipo de concurso
+  </h3>
+  <div class="flex-container"
+    style="display: flex;justify-content: space-around;background:#fff;">
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h4 class="card-title">
+          Películas
+        </h4>
+        <p class="card-text">
+          Próxima parada: lista de películas. Aquí encontrarás un buen surtido
+          de largometrajes tanto antiguos como nuevos, cosa que indica su año de
+          estreno, y también puedes ver a qué franquicias pertenecen algunas
+          cuando le dés al botón que muestre la película que quieras.
+        </p>
+        <a href="/pelicula" class="btn btn-primary">Películas</a>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h4 class="card-title">
+          Series
+        </h4>
+        <p class="card-text">
+          Próxima parada: lista de series. La duración que se muestra en cada
+          una es cuánto duran sus episodios en sí, y también está su cantidad,
+          además de que algunas son parte de una franquicia, como algunas
+          películas.
+        </p>
+        <a href="/serie" class="btn btn-primary">Series</a>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h4 class="card-title">
+          Videojuegos
+        </h4>
+        <p class="card-text">
+          Próxima parada: lista de videojuegos. Esta tabla muestra una gran
+          cantidad de videojuegos también antiguos y recientes. También hay
+          algunos que son parte de alguna franquicia y se puede ver la consola
+          sobre cuyo enlace hagas clic, pero muchos juegos están para consolas
+          específicas. ¡No pases por alto los de Mario y Sonic, seguro que te
+          gustan!
+        </p>
+        <a href="/videojuego" class="btn btn-primary">Videojuegos</a>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h4 class="card-title">
+          Música
+        </h4>
+        <p class="card-text">
+          Próxima parada: lista de canciones. Si te gusta escuchar música, este
+          es el sitio que a lo mejor más te interesa ver. Los datos de las
+          canciones registradas en la tabla que verás aquí te serán de interés.
+        </p>
+        <a href="/cancion" class="btn btn-primary">Canciones</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

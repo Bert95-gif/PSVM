@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Inserta una franquicia
+{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+  <style></style>
+  <div class="mb-3" style="width: 500px;  margin: auto;">
+    <h4>¡Bienvenido al formulario de introducción de franquicias! Toca los cuadros o los títulos de los videojuegos, series y películas que quieras añadir. Para quitarlos, vuelve a tocarlos.</h4>
+    </div><div class="mb-3" style="width: 300px;  margin: auto;"><h2>
+      Introduce una nueva franquicia
+    </h2>
+    
+    <div class="col-auto">
+    <form action="{{ path('app_franquicia_new') }}" method="post">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.nombre) }}
+        </div>
+    </div>
+    Películas<br>
+    <div class="row">
+        <div class="col" style="text-align:left">
+            {{ form_row(form.peliculas) }}
+        </div>
+    </div>
+    Series<br>
+    <div class="row">
+        <div class="col" style="text-align:left">
+            {{ form_row(form.series) }}
+        </div>
+    </div>
+    Videojuegos<br>
+    <div class="row">
+        <div class="col" style="text-align:left">
+            {{ form_row(form.videojuegos) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.send) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+    </form>
+    </div>
+    </div>
+    <a href="/franquicia" class="btn btn-secondary" style="margin-bottom:20px">Volver</a>
+  </div>
+{% endblock %}

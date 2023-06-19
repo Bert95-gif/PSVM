@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Juego confirmado
+{% endblock %}
+
+{% block body %}
+  <div class="col-auto">
+    <h3>
+      El juego se ha confirmado con éxito
+    </h3>
+    <div class="container">
+      <table class="table table-bordered" style="border-color:black;">
+        <th>
+          Imagen
+        </th>
+        <th colspan="2">
+          Datos
+        </th>
+        <tr>
+        <td rowspan="5">
+        <img style="width:300px" src="{{juego.imagen}}">
+        </td>
+        <th>Calificación por edades</th><td>{% if juego.calificacion == 3 or (juego.calificacion < 7 and juego.calificacion > 3) %}
+					<img style="width:100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/PEGI_3.svg/1200px-PEGI_3.svg.png">
+					{% elseif juego.calificacion == 7 or (juego.calificacion < 12 and juego.calificacion > 7) %}
+					<img style="width:100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/PEGI_7.svg/840px-PEGI_7.svg.png">
+					{% elseif juego.calificacion == 12 or (juego.calificacion < 16 and juego.calificacion > 12) %}
+					<img style="width:100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/PEGI_12.svg/840px-PEGI_12.svg.png">
+					{% elseif juego.calificacion == 16 or (juego.calificacion < 18 and juego.calificacion > 16) %}
+					<img style="width:100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/PEGI_16.svg/800px-PEGI_16.svg.png">
+					{% elseif juego.calificacion == 18 %}
+					<img style="width:100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/PEGI_18.svg/800px-PEGI_18.svg.png">
+					{% endif %}</td><tr>
+        <th>Año de lanzamiento</th><td>{{juego.anio}}</td><tr>
+        <th>{% if juego.generos|length == 1 %}Género{% else %}Géneros{% endif %}</th><td>{% if juego.generos|length == 1 %}{% for genero in juego.generos|sort((a, b) => a.tipo <=> b.tipo) %}<p>{{genero.tipo}}</p> {% endfor %}{% else %}<ul>{% for genero in juego.generos|sort((a, b) => a.tipo <=> b.tipo) %}<li>{{genero.tipo}}</li> {% endfor %}</ul>{% endif %}</td><tr>
+        <th>{% if juego.consolas|length == 1 %}Consola{% else %}Consolas{% endif %}</th><td>{% if juego.consolas|length == 1 %}{% for consola in juego.consolas|sort((a, b) => a.abreviatura <=> b.abreviatura) %}<a href="/consola/show/{{consola.id}}">{{consola.abreviatura}}</a>{% endfor %}{% else %}<ul>{% for consola in juego.consolas|sort((a, b) => a.abreviatura <=> b.abreviatura) %}<li><a href="/consola/show/{{consola.id}}">{{consola.abreviatura}}</a></li> {% endfor %}</ul>{% endif %}</td>
+      </table>
+    </div>
+    <div class="container">
+      <a href="/videojuego" class="btn btn-secondary">Volver a la lista de videojuegos</a>
+      {% if is_granted('ROLE_USER')%}
+      <a href="/videojuego/edit/{{juego.id}}" class="btn btn-warning">
+        Modificar
+      </a>
+      {% endif %}
+    </div><br>
+  </div>
+{% endblock %}

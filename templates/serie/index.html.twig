@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block title %}Lista de series
+{% endblock %}
+
+{% block body %}
+{% if is_granted('ROLE_USER')%}
+	<a href="/serie/new" class="btn btn-primary">Introducir otra serie</a>
+	{% endif %}
+	<h3 style="text-align:center">Lista de series</h3>
+	<div class="m-3">
+	<table class="table table-bordered" style="text-align:center; border-color:black">
+		<thead>
+			<tr>
+				<th>Título</th>
+                <th>Cantidad de episodios</th>
+				<th>Duración de cada episodio</th>
+				<th>Año de estreno</th>
+				<th>Género/s</th>
+                <th>Imagen</th>
+				<th>Opciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for serie in series|sort((a, b) => a.titulo <=> b.titulo) %}
+				<tr>
+					<td>{{serie.titulo}}</td>
+					<td>{{serie.episodios}} episodios</td>
+                    <td>{{serie.duracion}} minutos</td>
+					<td>{{serie.anio}}</td>
+					<td>{% if serie.generos|length == 1 %}{% for genero in serie.generos|sort((a, b) => a.tipo <=> b.tipo) %} {{genero.tipo}} {% endfor %}{% else %}<ul>{% for genero in serie.generos|sort((a, b) => a.tipo <=> b.tipo) %}
+					<li>{{genero.tipo}}</li> {% endfor %}</ul>{% endif %}</td>
+                    <td>{% if serie.enlace is not null %}<a href="{{serie.enlace}}" title="{{serie.titulo}}" target="_blank"><img style="height:150px;" title="{{serie.titulo}}" src="{{serie.imagen}}"></a>{% else %}<img style="height:150px;" title="{{serie.titulo}}" src="{{serie.imagen}}">{% endif %}</td>
+					<td>
+					{% if is_granted('ROLE_USER')%}
+					<a href="/serie/check/{{serie.id}}" class="btn btn-danger">Eliminar</a>
+					
+					<a href="/serie/edit/{{serie.id}}" class="btn btn-warning">Modificar</a>
+					{% endif %}
+					<a href="/serie/show/{{serie.id}}" class="btn btn-success">Mostrar</a>
+					</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  ¿Eliminar película?
+{% endblock %}
+
+{% block body %}
+  <div class="col-auto">
+    <h3>
+      ¿Seguro que quieres eliminar esta película?
+    </h3>
+    <a href="/pelicula/delete/{{pelicula.id}}" class="btn btn-danger">Sí</a>
+    <a href="/pelicula" class="btn btn-success">No</a>
+    <div class="container">
+        <img style="width:300px" src="{{pelicula.imagen}}">
+      </table>
+    </div>
+    <div class="container">
+      <h4>Título: {{pelicula.titulo}}</h4>
+    </div>
+  </div>
+{% endblock %}
