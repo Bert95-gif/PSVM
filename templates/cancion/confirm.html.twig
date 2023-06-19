@@ -36,9 +36,9 @@
       </table>
     </div>
     <div class="container">
-      <a href="/cancion" class="btn btn-secondary">Volver a la lista de canciones</a>
+      <a href="/cancion" class="btn btn-secondary mb-3">Volver a la lista de canciones</a>
       {% if is_granted('ROLE_USER')%}
-      <a href="/cancion/edit/{{cancion.id}}" class="btn btn-warning">
+      <a href="/cancion/edit/{{cancion.id}}" class="btn btn-warning mb-3">
         Modificar
       </a>
       {% endif %}

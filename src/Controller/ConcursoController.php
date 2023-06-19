@@ -74,9 +74,9 @@ class ConcursoController extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->persist($concurso);
             $entityManager->flush();
-            return $this->render('/concurso/confirm.html.twig', []);
+            return $this->render('concurso/confirm.html.twig', []);
         }
-        return $this->render('/concurso/newPelicula.html.twig', ['form' => $form->createView()]);
+        return $this->render('concurso/newPelicula.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -92,9 +92,9 @@ class ConcursoController extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->persist($concurso);
             $entityManager->flush();
-            return $this->render('/concurso/confirm.html.twig', []);
+            return $this->render('concurso/confirm.html.twig', []);
         }
-        return $this->render('/concurso/newSerie.html.twig', ['form' => $form->createView()]);
+        return $this->render('concurso/newSerie.html.twig', ['form' => $form->createView()]);
     }
 
     /**

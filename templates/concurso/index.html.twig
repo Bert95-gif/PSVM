@@ -60,7 +60,7 @@
             {% if (concurso.votoPeliculas is empty) %}
             Ninguna
             {% else %}
-            <a href="/pelicula/show/{{concurso.calcularPeliculaGanadora.id}}">{{concurso.calcularPeliculaGanadora.titulo}}{% if concurso.fechaFinal|date('U') > "now"|date('U')%} (provisionalmente) {% endif %}</a>
+            <a href="/pelicula/show/{{concurso.calcularPeliculaGanadora.id}}">{{concurso.calcularPeliculaGanadora.titulo}}</a>{% if concurso.fechaFinal|date('U') > "now"|date('U')%} <p>(provisionalmente)</p> {% endif %}
             {% endif %}
             </td>
             
@@ -142,7 +142,7 @@
             {% if (concurso.votoSeries is empty) %}
             Ninguna
             {% else %}
-            <a href="/serie/show/{{concurso.calcularSerieGanadora.id}}">{{concurso.calcularSerieGanadora.titulo}}{% if concurso.fechaFinal|date('U') > "now"|date('U')%} (provisionalmente) {% endif %}</a>
+            <a href="/serie/show/{{concurso.calcularSerieGanadora.id}}">{{concurso.calcularSerieGanadora.titulo}}</a>{% if concurso.fechaFinal|date('U') > "now"|date('U')%} <p>(provisionalmente)</p> {% endif %}
             {% endif %}
             </td>
             
@@ -222,7 +222,7 @@
             {% if concurso.votoVideojuegos is empty %}
             Ninguno
             {% else %}
-            <a href="/videojuego/show/{{concurso.calcularJuegoGanador.id}}">{{concurso.calcularJuegoGanador.titulo}}{% if concurso.fechaFinal|date('U') > "now"|date('U')%} (provisionalmente) {% endif %}</a>
+            <a href="/videojuego/show/{{concurso.calcularJuegoGanador.id}}">{{concurso.calcularJuegoGanador.titulo}}</a>{% if concurso.fechaFinal|date('U') > "now"|date('U')%} <p>(provisionalmente)</p> {% endif %}
             {% endif %}
             </td>
           <td>
@@ -300,7 +300,7 @@
             {% if (concurso.votoCancions is empty) %}
             Ninguna
             {% else %}
-            <a href="/cancion/show/{{concurso.calcularCancionGanadora.id}}">{{concurso.calcularCancionGanadora.nombre}}{% if concurso.fechaFinal|date('U') > "now"|date('U')%} (provisionalmente) {% endif %}</a>
+            <a href="/cancion/show/{{concurso.calcularCancionGanadora.id}}">{{concurso.calcularCancionGanadora.nombre}}</a>{% if concurso.fechaFinal|date('U') > "now"|date('U')%} <p>(provisionalmente)</p> {% endif %}
             {% endif %}
             </td>
             
