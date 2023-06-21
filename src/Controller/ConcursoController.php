@@ -204,7 +204,7 @@ class ConcursoController extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->persist($voto);
             $entityManager->flush();
-            return $this->render('/concurso/peliculaVotos.html.twig', ['id' => $id, 'votos' => $concurso->calcularVotosPorJuego(), 'concurso' => $concurso, 'juegoGanador' => $concurso->calcularJuegoGanador()]);
+            return $this->render('/concurso/videojuegoVotos.html.twig', ['id' => $id, 'votos' => $concurso->calcularVotosPorJuego(), 'concurso' => $concurso, 'juegoGanador' => $concurso->calcularJuegoGanador()]);
         }
 
         return $this->render('/concurso/juegoGanador.html.twig', ['id' => $id, 'concurso' => $concurso, 'form' => $form->createView()]);
